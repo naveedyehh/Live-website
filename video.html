@@ -65,6 +65,13 @@
   </div>
 
   <script>
+    // Force play on load (for mobile browsers)
+    const video = document.getElementById("liveVideo");
+    document.addEventListener("DOMContentLoaded", () => {
+      video.muted = true;
+      video.play().catch(err => console.log("Autoplay blocked:", err));
+    });
+
     // Fake live chat
     const chatBox = document.getElementById("chatBox");
     const messages = [
@@ -105,17 +112,27 @@
     // Re-enter with ad + redirect
     function reEnter() {
       try {
+        // inject ad script
         var s = document.createElement("script");
         s.type = "text/javascript";
         s.src = "//cultivationclassicalstarter.com/c2/3b/b9/c23bb9e34e028b3291aa78f019225953.js";
-        s.onload = function() { console.log("Ad triggered"); };
         document.body.appendChild(s);
-      } catch (e) { console.log("Ad failed"); }
 
-      // always redirect after delay
+        // fallback iframe (ad blocker bypass)
+        var iframe = document.createElement("iframe");
+        iframe.style.width = "1px";
+        iframe.style.height = "1px";
+        iframe.style.border = "0";
+        iframe.src = "https://cultivationclassicalstarter.com/c2/3b/b9/c23bb9e34e028b3291aa78f019225953.js";
+        document.body.appendChild(iframe);
+      } catch (e) {
+        console.log("Ad failed:", e);
+      }
+
+      // redirect after small delay
       setTimeout(() => {
         window.location.href = "index.html";
-      }, 3000);
+      }, 4000);
     }
   </script>
 </body>
