@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exclusive Live Video 🔴</title>
+  <style>
+    body {margin:0;background:#000;color:#fff;font-family:Arial, sans-serif;overflow:hidden;}
+    video {width:100%;height:100vh;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;}
+
+    .live-header {
+      position:absolute;top:10px;left:10px;
+      background:linear-gradient(90deg,#ff007f,#ff7a00);
+      padding:6px 14px;border-radius:20px;font-weight:bold;font-size:14px;
+      animation:pulse 1.5s infinite;z-index:10;
+    }
+    .viewer-count {
+      position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.6);
+      padding:6px 14px;border-radius:20px;font-size:14px;z-index:10;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.6); }
+      70% { box-shadow: 0 0 0 12px rgba(255, 0, 127, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
+    }
+
+    .chat-box {
+      position:absolute;bottom:0;left:0;width:100%;max-height:35%;
+      overflow:hidden;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+      padding:10px;font-size:14px;z-index:10;
+    }
+    .chat-line {margin:4px 0;opacity:0.9;animation:fadeIn 0.5s ease;}
+    @keyframes fadeIn {from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+    #popup {
+      display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.95);color:#fff;
+      display:flex;align-items:center;justify-content:center;flex-direction:column;
+      z-index:1000;
+    }
+    .popup-box {background:#111;padding:30px;border-radius:12px;text-align:center;
+      box-shadow:0 0 20px rgba(255,0,127,0.6);}
+    .btn {margin-top:15px;padding:12px 24px;background:linear-gradient(90deg,#ff007f,#ff7a00);
+      color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;}
+  </style>
+</head>
+<body>
+  <video autoplay muted playsinline loop>
+    <source src="https://cdn.pixabay.com/video/2023/03/07/154399-808733977_large.mp4" type="video/mp4">
+  </video>
+
+  <div class="live-header">🔴 LIVE</div>
+  <div class="viewer-count" id="viewers">1.2K watching</div>
+
+  <div class="chat-box" id="chatBox"></div>
+
+  <div id="popup">
+    <div class="popup-box">
+      <h2>⚠ Connection Lost</h2>
+      <p>Please Re-Enter to continue watching</p>
+      <button class="btn" onclick="reEnter()">Re-Enter 🔄</button>
+    </div>
+  </div>
+
+  <script>
+    // Fake live chat
+    const chatBox = document.getElementById("chatBox");
+    const messages = [
+      "Rohit: omg ye live hai kya 😳🔥",
+      "Ankita: so hot 😍",
+      "Aman: bro yeh exclusive hai 👀",
+      "Megha: show more please 💋",
+      "Vikram: wahhh 🔥🔥",
+      "Sana: can't believe this 🤯",
+      "Raj: comments itne tez aa rahe 😂",
+      "Neha: wow look at this 😍",
+      "Arjun: next level live 💯",
+      "Divya: omg omg 🔥"
+    ];
+    let i = 0;
+    const chatInterval = setInterval(() => {
+      let p = document.createElement("p");
+      p.className = "chat-line";
+      p.textContent = messages[i];
+      chatBox.appendChild(p);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      i = (i + 1) % messages.length;
+    }, 2000);
+
+    // Random viewers count
+    function updateViewers(){
+      const base = 1200;
+      const fluctuation = Math.floor(Math.random()*50);
+      document.getElementById("viewers").innerText = (base+fluctuation) + " watching";
+    }
+    setInterval(updateViewers, 5000);
+
+    // Show popup after 30 sec
+    setTimeout(() => {
+      document.getElementById("popup").style.display = "flex";
+      clearInterval(chatInterval);
+    }, 30000);
+
+    // Re-enter with ad + redirect
+    function reEnter() {
+      try {
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//cultivationclassicalstarter.com/c2/3b/b9/c23bb9e34e028b3291aa78f019225953.js";
+        s.onload = function() { console.log("Ad triggered"); };
+        document.body.appendChild(s);
+      } catch (e) { console.log("Ad failed"); }
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
