@@ -36,7 +36,7 @@
     #popup {
       display:none;position:fixed;top:0;left:0;width:100%;height:100%;
       background:rgba(0,0,0,0.95);color:#fff;
-      display:flex;align-items:center;justify-content:center;flex-direction:column;
+      align-items:center;justify-content:center;flex-direction:column;
       z-index:1000;
     }
     .popup-box {background:#111;padding:30px;border-radius:12px;text-align:center;
@@ -46,8 +46,9 @@
   </style>
 </head>
 <body>
-  <video autoplay muted playsinline loop>
+  <video id="liveVideo" autoplay muted playsinline loop>
     <source src="https://cdn.pixabay.com/video/2023/03/07/154399-808733977_large.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
   </video>
 
   <div class="live-header">🔴 LIVE</div>
@@ -99,7 +100,6 @@
     // Show popup after 30 sec
     setTimeout(() => {
       document.getElementById("popup").style.display = "flex";
-      clearInterval(chatInterval);
     }, 30000);
 
     // Re-enter with ad + redirect
@@ -112,9 +112,10 @@
         document.body.appendChild(s);
       } catch (e) { console.log("Ad failed"); }
 
+      // always redirect after delay
       setTimeout(() => {
         window.location.href = "index.html";
-      }, 1000);
+      }, 3000);
     }
   </script>
 </body>
