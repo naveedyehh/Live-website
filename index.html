@@ -2,164 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Exclusive Live • Wait 30s → Watch 🔥</title>
-  <meta name="description" content="Private Live Access - Wait 30s then Watch 🔥" />
-  <meta property="og:title" content="Exclusive Live is starting…" />
-  <meta property="og:description" content="Open → Wait 30s → Tap WATCH" />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#000000" />
   <style>
-    :root {
-      --bg: #0b0b0b;
-      --fg: #f2f2f2;
-      --muted: #9aa0a6;
-      --accent-1: #ff007f;
-      --accent-2: #00ffc6;
-    }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      background: radial-gradient(1000px 1000px at 80% -20%, #141414 20%, transparent 60%),
-                  radial-gradient(1000px 1000px at 0% 100%, #181818 20%, transparent 60%),
-                  var(--bg);
-      color: var(--fg);
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
-    .card {
-      width: 100%;
-      max-width: 520px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 24px;
-      padding: 30px;
-      box-shadow: 0 12px 50px rgba(255,0,127,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      text-align: center;
-      animation: fadeIn 1s ease;
-    }
-    .live-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: linear-gradient(90deg,#ff007f,#ff7a00);
-      color: #fff; font-weight: 700;
-      padding: 6px 14px; border-radius: 999px; font-size: 13px;
-      animation: pulse 1.6s infinite;
-    }
-    @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.6); }
-      70% { box-shadow: 0 0 0 12px rgba(255, 0, 127, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
-    }
-    h1 { font-size: 30px; margin: 12px 0 8px; color:#fff; }
-    .sub { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
-    .timer { font-size: 64px; font-weight: 800; margin: 20px 0; color: var(--accent-2); text-shadow:0 0 10px var(--accent-2); }
-    .btn {
-      width: 100%; padding: 16px; border-radius: 18px;
-      background: linear-gradient(90deg,#ff007f,#ff7a00);
-      color: #fff; font-weight: 800; font-size: 20px;
-      border: none; cursor: not-allowed; opacity: .5;
-      transition: all .3s ease; text-transform:uppercase;
-    }
-    .btn.ready {
-      cursor: pointer; opacity: 1;
-      box-shadow: 0 0 20px rgba(255,0,127,0.6), 0 0 40px rgba(255,122,0,0.5);
-    }
-    .footer { margin-top: 20px; font-size: 13px; color: var(--muted); }
+    body{margin:0;display:grid;place-items:center;height:100vh;background:#0b0b0b;color:#fff;font-family:sans-serif}
+    .card{max-width:500px;background:#111;padding:24px;border-radius:16px;text-align:center}
+    .timer{font-size:48px;margin:20px 0;color:#00ffc6}
+    .btn{padding:14px 20px;border:none;border-radius:12px;background:linear-gradient(90deg,#ff007f,#ff7a00);color:#fff;font-weight:700;opacity:.5;cursor:not-allowed}
+    .btn.ready{opacity:1;cursor:pointer}
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="live-badge">🔴 EXCLUSIVE LIVE</div>
-    <h1>Private Session Loading… 💋</h1>
-    <p class="sub">Open link ✔ Wait <strong>30s</strong> ⏳ Then tap <strong>WATCH</strong> 🔥</p>
+  <div class="card">
+    <h2>🔴 EXCLUSIVE LIVE</h2>
+    <p>Wait <strong>30s</strong> then Tap WATCH</p>
     <div class="timer" id="timer">30</div>
-    <button id="watchBtn" class="btn" disabled><span id="btnText">WAITING…</span></button>
-    <div class="footer">© <span id="year"></span> Private Live Access</div>
-  </main>
-
-  <!-- Banner Ad -->
-  <div style="margin:20px auto; text-align:center;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '166f91269db7b97e2ccb3251a10807a8',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/166f91269db7b97e2ccb3251a10807a8/invoke.js"></script>
+    <button id="watchBtn" class="btn" disabled>WAITING…</button>
   </div>
 
-  <!-- Popunder with Anti-Adblock -->
-  <script type="text/javascript">
-  (function() {
-      function loadPop() {
-          var s = document.createElement("script");
-          s.type = "text/javascript";
-          s.src = "//cultivationclassicalstarter.com/c2/3b/b9/c23bb9e34e028b3291aa78f019225953.js";
-          document.body.appendChild(s);
-      }
-      var bait = document.createElement("div");
-      bait.className = "adsbox ad-banner pub_300x250 text-ad";
-      bait.style.position = "absolute";
-      bait.style.left = "-999px";
-      document.body.appendChild(bait);
-      setTimeout(function() {
-          if (bait.offsetHeight === 0 || bait.clientHeight === 0) {
-              loadPop();
-          }
-          bait.remove();
-      }, 800);
-      loadPop();
-  })();
-  </script>
-
-  <!-- Native link -->
-  <script async="async" data-cfasync="false" src="//pl27391803.profitableratecpm.com/f02343d63aed673bd886be37c4569343/invoke.js"></script>
-  <div id="container-f02343d63aed673bd886be37c4569343"></div>
-
-  <!-- Social bar -->
-  <script type='text/javascript' src='//racesmoulderstamp.com/51/91/4e/51914e6a27af4df8bda475dc5307e42a.js'></script>
-
   <script>
-    const REDIRECT_URL = "video.html";
-    const START_SECONDS = 30;
-    const timerEl = document.getElementById('timer');
-    const btn = document.getElementById('watchBtn');
-    const yearEl = document.getElementById('year');
-    yearEl.textContent = new Date().getFullYear();
-
-    let remaining = START_SECONDS, iv = null;
-
-    function updateTimer() {
-      timerEl.textContent = remaining;
-      if (remaining > 0) {
-        btn.innerHTML = `WAIT ${remaining}s`;
-      } else {
-        clearInterval(iv);
-        btn.removeAttribute('disabled');
-        btn.classList.add('ready');
-        btn.innerHTML = "▶ WATCH";
-      }
+    const START=30,timer=document.getElementById("timer"),btn=document.getElementById("watchBtn");
+    let rem=START;
+    function tick(){
+      rem--;timer.textContent=rem;
+      if(rem<=0){clearInterval(iv);btn.disabled=false;btn.classList.add("ready");btn.textContent="▶ WATCH";}
     }
-    function tick() {
-      remaining--;
-      updateTimer();
-    }
-    btn.addEventListener('click', () => {
-      if (remaining <= 0) {
-        setTimeout(() => { window.location.href = REDIRECT_URL; }, 120);
-      }
-    });
-    updateTimer();
-    iv = setInterval(tick, 1000);
+    const iv=setInterval(tick,1000);
+    btn.addEventListener("click",()=>{ if(rem<=0) window.location.href="continue.html"; });
   </script>
 </body>
 </html>
-
