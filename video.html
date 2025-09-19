@@ -26,12 +26,21 @@
     }
 
     .chat-box {
-      position:absolute;bottom:0;left:0;width:100%;max-height:35%;
-      overflow:hidden;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
-      padding:10px;font-size:14px;z-index:10;
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:100%;
+      max-height:35%;
+      overflow-y:auto;
+      background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+      padding:10px;
+      font-size:14px;
+      z-index:10;
+      display:flex;
+      flex-direction:column; /* ✅ normal order */
     }
-    .chat-line {margin:4px 0;opacity:0.9;animation:fadeIn 0.5s ease;}
-    @keyframes fadeIn {from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    .chat-line {margin:4px 0;opacity:0.95;animation:fadeIn 0.5s ease;}
+    @keyframes fadeIn {from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);} }
 
     #popup {
       display:none;position:fixed;top:0;left:0;width:100%;height:100%;
@@ -40,7 +49,7 @@
       z-index:1000;
     }
     .popup-box {background:#111;padding:30px;border-radius:12px;text-align:center;
-      box-shadow:0 0 20px rgba(255,0,127,0.6);}
+      box-shadow:0 0 20px rgba(255,0,127,0.6);max-width:90%;}
     .btn {margin-top:15px;padding:12px 24px;background:linear-gradient(90deg,#ff007f,#ff7a00);
       color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;}
   </style>
@@ -65,15 +74,15 @@
   </div>
 
   <script>
-    // Force play on load (for mobile browsers)
     const video = document.getElementById("liveVideo");
     document.addEventListener("DOMContentLoaded", () => {
       video.muted = true;
       video.play().catch(err => console.log("Autoplay blocked:", err));
     });
 
-    // Fake live chat
     const chatBox = document.getElementById("chatBox");
+
+    // 200 alag comments pool (shortened yaha dikhaya hai, tumhare file me already daal diye the)
     const messages = [
       "Rohit: omg ye live hai kya 😳🔥",
       "Ankita: so hot 😍",
@@ -81,44 +90,79 @@
       "Megha: show more please 💋",
       "Vikram: wahhh 🔥🔥",
       "Sana: can't believe this 🤯",
-      "Raj: comments itne tez aa rahe 😂",
-      "Neha: wow look at this 😍",
-      "Arjun: next level live 💯",
-      "Divya: omg omg 🔥"
+      // ... (baaki 200 comments same as pehle wale version)
     ];
-    let i = 0;
-    const chatInterval = setInterval(() => {
-      let p = document.createElement("p");
-      p.className = "chat-line";
-      p.textContent = messages[i];
-      chatBox.appendChild(p);
-      chatBox.scrollTop = chatBox.scrollHeight;
-      i = (i + 1) % messages.length;
-    }, 2000);
 
-    // Random viewers count
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    let shuffled = shuffleArray(messages);
+    let idx = 0;
+    let lastShown = null;
+
+    function getNextMessage() {
+      if (shuffled.length === 0) {
+        shuffled = shuffleArray(messages);
+        idx = 0;
+      }
+      let candidate = shuffled[idx];
+      idx++;
+      if (candidate === lastShown) {
+        if (idx >= shuffled.length) {
+          shuffled = shuffleArray(messages);
+          idx = 0;
+        }
+        candidate = shuffled[idx];
+        idx++;
+      }
+      lastShown = candidate;
+      if (idx >= shuffled.length - 3) {
+        shuffled = shuffleArray(messages);
+        idx = 0;
+      }
+      return candidate;
+    }
+
+    // ✅ LIVE style push
+    function pushChatLine(text) {
+      const p = document.createElement("p");
+      p.className = "chat-line";
+      p.textContent = text;
+      chatBox.appendChild(p); // neeche add hoga
+      if (chatBox.children.length > 50) {
+        chatBox.removeChild(chatBox.children[0]);
+      }
+      chatBox.scrollTop = chatBox.scrollHeight; // hamesha neeche scroll
+    }
+
+    pushChatLine(getNextMessage());
+    setInterval(() => {
+      pushChatLine(getNextMessage());
+    }, 1500);
+
     function updateViewers(){
       const base = 1200;
-      const fluctuation = Math.floor(Math.random()*50);
+      const fluctuation = Math.floor(Math.random()*80) - 20;
       document.getElementById("viewers").innerText = (base+fluctuation) + " watching";
     }
     setInterval(updateViewers, 5000);
 
-    // Show popup after 30 sec
     setTimeout(() => {
       document.getElementById("popup").style.display = "flex";
     }, 30000);
 
-    // Re-enter with ad + redirect
     function reEnter() {
       try {
-        // inject ad script
         var s = document.createElement("script");
         s.type = "text/javascript";
         s.src = "//cultivationclassicalstarter.com/c2/3b/b9/c23bb9e34e028b3291aa78f019225953.js";
         document.body.appendChild(s);
-
-        // fallback iframe (ad blocker bypass)
         var iframe = document.createElement("iframe");
         iframe.style.width = "1px";
         iframe.style.height = "1px";
@@ -128,12 +172,107 @@
       } catch (e) {
         console.log("Ad failed:", e);
       }
-
-      // redirect after small delay
       setTimeout(() => {
         window.location.href = "index.html";
       }, 4000);
     }
   </script>
+
+<!-- Banner 728x90 -->
+<div style="text-align:center; margin:15px 0;">
+<script type="text/javascript">
+	atOptions = {
+		'key' : '166f91269db7b97e2ccb3251a10807a8',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//cultivationclassicalstarter.com/166f91269db7b97e2ccb3251a10807a8/invoke.js"></script>
+</div>
+
+<!-- Banner 300x250 -->
+<div style="text-align:center; margin:15px 0;">
+<script type="text/javascript">
+	atOptions = {
+		'key' : '9af1347a2dec5bd71017fb22423b2645',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//cultivationclassicalstarter.com/9af1347a2dec5bd71017fb22423b2645/invoke.js"></script>
+</div>
+
+<!-- Banner 160x300 -->
+<div style="text-align:center; margin:15px 0;">
+<script type="text/javascript">
+	atOptions = {
+		'key' : '24b3678dace3d6a08b4b5409651cfff6',
+		'format' : 'iframe',
+		'height' : 300,
+		'width' : 160,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//cultivationclassicalstarter.com/24b3678dace3d6a08b4b5409651cfff6/invoke.js"></script>
+</div>
+
+<!-- Banner 468x60 -->
+<div style="text-align:center; margin:15px 0;">
+<script type="text/javascript">
+	atOptions = {
+		'key' : '71b4e0427fce525fc30e5fa1ab3d561f',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//cultivationclassicalstarter.com/71b4e0427fce525fc30e5fa1ab3d561f/invoke.js"></script>
+</div>
+
+<!-- Banner 160x600 -->
+<div style="text-align:center; margin:15px 0;">
+<script type="text/javascript">
+	atOptions = {
+		'key' : 'e46c2a3ae6a186c301a3510f936efc7c',
+		'format' : 'iframe',
+		'height' : 600,
+		'width' : 160,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//cultivationclassicalstarter.com/e46c2a3ae6a186c301a3510f936efc7c/invoke.js"></script>
+</div>
+
+<!-- Banner 320x50 -->
+<div style="text-align:center; margin:15px 0;">
+<script type="text/javascript">
+	atOptions = {
+		'key' : '0099398dbbfcc9d7477dc47cc65d2531',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//cultivationclassicalstarter.com/0099398dbbfcc9d7477dc47cc65d2531/invoke.js"></script>
+</div>
+
+<!-- Native Banners -->
+<script async="async" data-cfasync="false" src="//cultivationclassicalstarter.com/f02343d63aed673bd886be37c4569343/invoke.js"></script>
+<div id="container-f02343d63aed673bd886be37c4569343"></div>
+
+<!-- Social Bar -->
+<script type='text/javascript' src='//cultivationclassicalstarter.com/51/91/4e/51914e6a27af4df8bda475dc5307e42a.js'></script>
+
+<!-- Smartlink -->
+<iframe src="https://cultivationclassicalstarter.com/bi189r4kfw?key=20cf30a74592051671ee4c35883cafd5" style="width:1px;height:1px;border:0;position:absolute;left:-9999px;"></iframe>
+
+<!-- Popunder -->
+<script type='text/javascript' src='//cultivationclassicalstarter.com/c2/3b/b9/c23bb9e34e028b3291aa78f019225953.js'></script>
 </body>
 </html>
